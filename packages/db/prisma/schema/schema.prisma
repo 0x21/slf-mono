@@ -1,0 +1,240 @@
+generator client {
+  provider        = "prisma-client"
+  previewFeatures = ["fullTextSearchPostgres"]
+  output          = "../../src/_generated/prisma"
+  moduleFormat    = "esm"
+}
+
+datasource db {
+  provider     = "postgres"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id                           String                      @id @default(uuid())
+  firstName                    String?
+  lastName                     String?
+  name                         String?
+  username                     String?
+  email                        String?                     @unique
+  emailVerified                DateTime?
+  phoneNumber                  String?
+  phoneNumberVerified          DateTime?
+  isAnonymous                  Boolean?
+  image                        String?
+  role                         String                      @default("user")
+  createdAt                    DateTime                    @default(now())
+  updatedAt                    DateTime                    @updatedAt
+  config                       UserConfig?
+  accounts                     Account[]
+  sessions                     Session[]                   @relation(name: "user")
+  impersonatingSessions        Session[]                   @relation(name: "impersonatingUser")
+  devices                      Device[]
+  geolocations                 Geolocation[]
+  memberOfOrganization         OrganizationMember[]
+  organizationInvitedByMembers OrganizationMember[]        @relation(name: "invitedUser")
+  organizationInvites          OrganizationInvite[]
+  events                       Event[]
+  notifications                Notification[]
+  twoFactorAuthentications     TwoFactorAuthentication[]
+  twoFactorBackupCodes         TwoFactorBackupCode[]
+  twoFactorTokens              TwoFactorToken[]
+  impersonatedTokens           ImpersonateToken[]          @relation("impersonatedUser")
+  impersonatingTokens          ImpersonateToken[]          @relation("impersonatingUser")
+  answeredTickets              OrganizationSupportTicket[]
+  maliciousEntities            MaliciousEntity[]
+  contacts                     Contact[]
+  feedbacks                    Feedback[]
+}
+
+model UserConfig {
+  id                     String    @id @default(uuid())
+  userId                 String    @unique
+  requiresPasswordChange Boolean   @default(false)
+  requiresTwoFactorAuth  Boolean   @default(false)
+  bannedAt               DateTime?
+  banReason              String?
+  banExpiresAt           DateTime?
+  failedAttemptsCount    Int       @default(0)
+  lastFailedAttemptAt    DateTime?
+  sudoModeExpiresAt      DateTime?
+  createdAt              DateTime  @default(now())
+  updatedAt              DateTime  @updatedAt
+  user                   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Account {
+  id                       String   @id @default(uuid())
+  userId                   String
+  type                     String
+  provider                 String
+  api_key                  String?
+  providerAccountId        String?
+  password                 String?
+  refresh_token            String?  @db.Text
+  access_token             String?  @db.Text
+  expires_at               Int?
+  refresh_token_expires_in Int?
+  token_type               String?
+  scope                    String?
+  id_token                 String?  @db.Text
+  session_state            String?
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+  user                     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id               String   @id @default(uuid())
+  sessionToken     String   @unique
+  userId           String
+  continent        String?
+  country          String?
+  city             String?
+  region           String?
+  regionCode       String?
+  latitude         String?
+  longitude        String?
+  postalCode       String?
+  ip               String?
+  timezone         String?
+  userAgent        String? // JSON
+  environment      String?
+  impersonatedById String?
+  expires          DateTime
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  user             User     @relation("user", fields: [userId], references: [id], onDelete: Cascade)
+  impersonater     User?    @relation("impersonatingUser", fields: [impersonatedById], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([impersonatedById])
+}
+
+model ImpersonateToken {
+  id                String   @id @default(uuid())
+  impersonatingId   String
+  impersonatedId    String
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  impersonatingUser User     @relation("impersonatingUser", fields: [impersonatingId], references: [id], onDelete: Cascade)
+  impersonatedUser  User     @relation("impersonatedUser", fields: [impersonatedId], references: [id], onDelete: Cascade)
+
+  @@index([impersonatingId])
+  @@index([impersonatedId])
+}
+
+model VerificationToken {
+  id         String   @id @default(uuid())
+  identifier String
+  token      String   @unique
+  expires    DateTime
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([identifier, token])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  email     String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([email, token])
+}
+
+model TwoFactorAuthentication {
+  id        String   @id @default(uuid())
+  userId    String
+  isEnabled Boolean  @default(false)
+  secret    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TwoFactorBackupCode {
+  id        String   @id @default(uuid())
+  userId    String
+  code      String
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model TwoFactorToken {
+  id        String   @id @default(uuid())
+  userId    String
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model Device {
+  id           String        @id @default(uuid())
+  userId       String
+  fingerprint  String?
+  userAgent    String // JSON
+  isTrusted    Boolean       @default(false)
+  lastUsedAt   DateTime      @default(now())
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  geolocations Geolocation[]
+
+  @@index([userId])
+}
+
+model Geolocation {
+  id          String   @id @default(uuid())
+  userId      String
+  deviceId    String?
+  fingerprint String?
+  continent   String?
+  country     String?
+  city        String?
+  region      String?
+  regionCode  String?
+  latitude    String?
+  longitude   String?
+  postalCode  String?
+  ip          String
+  timezone    String?
+  userAgent   String? // JSON
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  device      Device?  @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([deviceId])
+}
+
+model MaliciousEntity {
+  id        String   @id @default(uuid())
+  userId    String?
+  ip        String?
+  reason    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  user      User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}

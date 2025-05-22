@@ -1,0 +1,28 @@
+{
+  "name": "@fulltemplate/tailwind-config",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    "./native": "./native.ts",
+    "./web": "./web.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "postcss": "8.4.39",
+    "tailwindcss": "catalog:tailwind4",
+    "tailwindcss-animate": "1.0.7"
+  },
+  "devDependencies": {
+    "@fulltemplate/eslint-config": "workspace:^",
+    "@fulltemplate/prettier-config": "workspace:^",
+    "@fulltemplate/tsconfig": "workspace:^",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "typescript": "catalog:"
+  },
+  "prettier": "@fulltemplate/prettier-config"
+}

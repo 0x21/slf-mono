@@ -1,0 +1,28 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "dev": {
+      "persistent": true
+    },
+    "start": {
+      "env": [
+        "PORT",
+        "DATABASE_URL",
+        "API_SECRET",
+        "API_SECRET_BACKEND",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "EMAIL_NAME",
+        "EMAIL_USER",
+        "EMAIL_PASS",
+        "KAFKA_URL"
+      ]
+    },
+    "build": {
+      "dependsOn": ["^build", "^db:generate"],
+      "outputs": ["dist/**"],
+      "env": ["PORT", "DATABASE_URL"]
+    }
+  }
+}

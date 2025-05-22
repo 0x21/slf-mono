@@ -1,0 +1,12 @@
+{
+  "name": "slf-cli",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "go run main.go",
+    "build": "go build -o slf-server main.go"
+  },
+  "files": [
+    "*.json"
+  ]
+}

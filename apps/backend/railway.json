@@ -1,0 +1,28 @@
+{
+  "$schema": "https://railway.app/railway.schema.json",
+  "build": {
+    "builder": "DOCKERFILE",
+    "dockerfilePath": "/apps/backend/Dockerfile",
+    "watchPatterns": [
+      "/packages/**",
+      "/apps/backend/**",
+      "/pnpm-lock.yaml",
+      "/pnpm-workspace.yaml"
+    ],
+    "buildCommand": null,
+    "nixpacksConfigPath": null,
+    "nixpacksPlan": null,
+    "nixpacksVersion": null
+  },
+  "deploy": {
+    "startCommand": "pnpm start --filter backend",
+    "region": "europe-west4",
+    "numReplicas": 1,
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10,
+    "cronSchedule": null,
+    "healthcheckPath": null,
+    "healthcheckTimeout": null,
+    "sleepApplication": false
+  }
+}

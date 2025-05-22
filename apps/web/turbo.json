@@ -1,0 +1,47 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "dev": {
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^build", "^db:generate"],
+      "outputs": [".next/**", "!.next/cache/**", "next-env.d.ts"],
+      "env": [
+        "DATABASE_URL",
+        "AUTH_SECRET",
+        "AUTH_URL",
+        "NEXT_PUBLIC_APP_URL",
+        "AUTH_GITHUB_ID",
+        "AUTH_GITHUB_SECRET",
+        "AUTH_GOOGLE_CLIENT_ID",
+        "AUTH_GOOGLE_CLIENT_SECRET",
+        "AUTH_SLACK_CLIENT_ID",
+        "AUTH_SLACK_CLIENT_SECRET",
+        "EMAIL_HOST",
+        "EMAIL_PORT",
+        "EMAIL_NAME",
+        "EMAIL_USER",
+        "EMAIL_PASS",
+        "API_SECRET",
+        "API_SECRET_BACKEND",
+        "NEXT_PUBLIC_RECAPTCHA_SITE_KEY",
+        "RECAPTCHA_SECRET_KEY",
+        "NEXT_PUBLIC_SOCKET_URL",
+        "NEXT_PUBLIC_GOOGLE_MAPS_API_KEY",
+        "NEXT_PUBLIC_POSTHOG_KEY",
+        "NEXT_PUBLIC_POSTHOG_HOST",
+        "DISABLE_EVENTS",
+        "DISABLE_EVENTS_SENSITIVE_VARIABLES",
+        "ENCRYPTION_KEY",
+        "KAFKA_URL",
+        "NEXT_RUNTIME",
+        "DISABLE_EMAIL",
+        "NEXT_PUBLIC_STRIPE_PUBLIC_KEY",
+        "STRIPE_SECRET_KEY",
+        "STRIPE_WEBHOOK_SECRET"
+      ]
+    }
+  }
+}

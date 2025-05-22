@@ -1,0 +1,13 @@
+{
+  "name": "slf-server",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "poc": "go run main.go",
+    "dev": "go run cmd/proxy-server/main.go",
+    "build": "go build -o slf-server main.go"
+  },
+  "files": [
+    "*.json"
+  ]
+}

@@ -1,0 +1,84 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "ui": "tui",
+  "envMode": "strict",
+  "tasks": {
+    "topo": {
+      "dependsOn": ["^topo"]
+    },
+    "dev": {
+      "dependsOn": ["^db:generate"],
+      "persistent": true,
+      "interactive": true,
+      "cache": false
+    },
+    "start": {},
+    "start:onpremise": {},
+    "build": {
+      "dependsOn": ["^build", "^db:generate"],
+      "outputs": [
+        ".cache/tsbuildinfo.json",
+        ".next/**",
+        "!.next/cache/**",
+        "next-env.d.ts",
+        ".expo/**",
+        ".output/**",
+        ".vercel/output/**",
+        "dist/**",
+        "build/**"
+      ]
+    },
+    "format": {
+      "outputs": [".cache/.prettiercache"],
+      "outputLogs": "new-only"
+    },
+    "lint": {
+      "dependsOn": ["^topo", "^build"],
+      "outputs": [".cache/.eslintcache"],
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^topo", "^db:generate", "^build"],
+      "outputs": [".cache/tsbuildinfo.json"],
+      "cache": false
+    },
+    "clean": {
+      "cache": false
+    },
+    "//#clean": {
+      "cache": false
+    },
+    "db:generate": {
+      "inputs": ["prisma/**"],
+      "outputs": ["_generated/**"],
+      "cache": false
+    },
+    "db:push": {
+      "inputs": ["prisma/**"],
+      "cache": false
+    },
+    "db:push-force": {
+      "inputs": ["prisma/**"],
+      "cache": false
+    },
+    "db:studio": {
+      "cache": false,
+      "persistent": true
+    },
+    "ui-add": {
+      "cache": false,
+      "interactive": true
+    }
+  },
+  "globalEnv": ["DATABASE_URL"],
+  "globalPassThroughEnv": [
+    "NODE_ENV",
+    "CI",
+    "VERCEL",
+    "VERCEL_ENV",
+    "VERCEL_URL",
+    "RAILWAY_PUBLIC_DOMAIN",
+    "SKIP_ENV_VALIDATION",
+    "npm_lifecycle_event"
+  ]
+}

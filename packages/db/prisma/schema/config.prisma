@@ -1,0 +1,80 @@
+model AppConfig {
+  id                         String               @id @default(uuid())
+  isLoginEnabled             Boolean              @default(true)
+  isRegisterEnabled          Boolean              @default(true)
+  isForgotPasswordEnabled    Boolean              @default(true)
+  isLockAccountEnabled       Boolean              @default(true)
+  isEmailDomainRestirected   Boolean              @default(false)
+  isEmailEnabled             Boolean              @default(true)
+  isSuperadminHidden         Boolean              @default(false)
+  isSuperadminRoleCloaked    Boolean              @default(true)
+  canAdminCreateUsers        Boolean              @default(true)
+  canAdminGiveSameRole       Boolean              @default(true)
+  canAdminConfigureRedirects Boolean              @default(true)
+  canAdminConfigureAppConfig Boolean              @default(true)
+  createdAt                  DateTime             @default(now())
+  updatedAt                  DateTime             @updatedAt
+  loginAttemptConfigs        LoginAttemptConfig[]
+  allowedEmailDomains        AllowedEmailDomain[]
+  blockedIps                 BlockedIp[]
+  authProviders              AuthProvider[]
+  redirects                  Redirect[]
+}
+
+model AuthProvider {
+  id          String    @id @default(uuid())
+  appConfigId String
+  provider    String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  appConfig   AppConfig @relation(fields: [appConfigId], references: [id], onDelete: Cascade)
+
+  @@index([appConfigId])
+}
+
+model LoginAttemptConfig {
+  id              String    @id @default(uuid())
+  appConfigId     String
+  attemptCount    Int
+  lockDuration    Int
+  isLockPermanent Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  appConfig       AppConfig @relation(fields: [appConfigId], references: [id], onDelete: Cascade)
+
+  @@index([appConfigId])
+}
+
+model AllowedEmailDomain {
+  id          String    @id @default(uuid())
+  appConfigId String
+  domain      String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  appConfig   AppConfig @relation(fields: [appConfigId], references: [id], onDelete: Cascade)
+
+  @@index([appConfigId])
+}
+
+model BlockedIp {
+  id          String    @id @default(uuid())
+  appConfigId String
+  ipAddress   String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  appConfig   AppConfig @relation(fields: [appConfigId], references: [id], onDelete: Cascade)
+
+  @@index([appConfigId])
+}
+
+model Redirect {
+  id          String    @id @default(uuid())
+  appConfigId String
+  origin      String
+  destination String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  appConfig   AppConfig @relation(fields: [appConfigId], references: [id], onDelete: Cascade)
+
+  @@index([appConfigId])
+}

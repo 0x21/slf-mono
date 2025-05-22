@@ -1,0 +1,32 @@
+model Event {
+    id             String        @id @default(uuid())
+    userId         String?
+    organizationId String?
+    severity       String        @default("info") // verbose, debug, info, warn, error
+    source         String        @default("user") // user, admin, backend, cron
+    category       String // auth, email, team, work, config, modal
+    type           String // auth:sign-in, email:welcome, team:invite, work:screenshot, config:news
+    action         String // created, deleted, updated, revoked, expired
+    status         String // failed, success
+    metadata       String? // JSON
+    continent      String?
+    country        String?
+    city           String?
+    region         String?
+    regionCode     String?
+    latitude       String?
+    longitude      String?
+    postalCode     String?
+    ip             String?
+    timezone       String?
+    userAgent      String? // JSON
+    environment    String?
+    error          String?
+    createdAt      DateTime      @default(now())
+    updatedAt      DateTime      @updatedAt
+    user           User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+    organization   Organization? @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+    @@index([organizationId])
+}

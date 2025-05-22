@@ -1,0 +1,38 @@
+{
+  "name": "@fulltemplate/db",
+  "version": "0.1.0",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "type": "module",
+  "scripts": {
+    "clean": "git clean -xdf .cache .turbo node_modules",
+    "dev": "pnpm with-env prisma generate --no-hints --watch",
+    "db:generate": "pnpm with-env prisma generate --no-hints",
+    "db:push": "pnpm with-env prisma db push --skip-generate",
+    "db:push-force": "pnpm with-env prisma db push --skip-generate --accept-data-loss",
+    "db:studio": "pnpm with-env prisma studio --port 5556",
+    "db:migrate:status": "prisma migrate status",
+    "db:migrate:init": "mkdir -p prisma/migrations/0_init && prisma migrate diff --from-empty --to-schema-datamodel prisma/schema --script > prisma/migrations/0_init/migration.sql",
+    "db:migrate:init:apply": "prisma migrate resolve --applied 0_init",
+    "db:migrate:create": "prisma migrate dev --create-only",
+    "db:migrate:deploy": "prisma migrate deploy",
+    "format": "prettier --check . --ignore-path ../../.gitignore",
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "with-env": "dotenv --"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@fulltemplate/eslint-config": "workspace:^",
+    "@fulltemplate/prettier-config": "workspace:^",
+    "@fulltemplate/tsconfig": "workspace:^",
+    "eslint": "catalog:",
+    "prettier": "catalog:",
+    "prisma": "6.8.1",
+    "typescript": "catalog:"
+  },
+  "prettier": "@fulltemplate/prettier-config"
+}
