@@ -1,5 +1,7 @@
 package config
 
+import "os"
+
 type Config struct {
 	KafkaBrokers []string
 	KafkaTopic   string
@@ -7,7 +9,7 @@ type Config struct {
 
 func Load() *Config {
 	return &Config{
-		KafkaBrokers: []string{"localhost:29092"},
+		KafkaBrokers: []string{os.Getenv("KAFKA_URL")},
 		KafkaTopic:   "connection",
 	}
 }
