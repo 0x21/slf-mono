@@ -9,9 +9,6 @@ export const authConnectionRouter = {
 
     const connections = await ctx.db.connection.findMany({
       where: {
-        status: {
-          notIn: ["stopped", "error", "interrupted"],
-        },
         apiKey: {
           userId: userId,
         },

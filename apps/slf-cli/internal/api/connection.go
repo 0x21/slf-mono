@@ -25,8 +25,8 @@ func (c *Client) CreateConnection() (*Connection, error) {
 	return response.Data, nil
 }
 
-func (c *Client) UpdateConnection(id string) error {
-	res, err := c.DoRequest(http.MethodPatch, "/api/connection/"+id, nil)
+func (c *Client) UpdateConnection(id, status string) error {
+	res, err := c.DoRequest(http.MethodPatch, "/api/connection/"+id, map[string]interface{}{"status": status})
 	if err != nil {
 		return err
 	}

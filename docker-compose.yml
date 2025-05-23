@@ -32,7 +32,7 @@ services:
       dockerfile: ./Dockerfile
     env_file: ./apps/slf-server/.env
     ports:
-      - "6000-7000:6000-7000"
+      - "6000-6100:6000-6100"
     restart: unless-stopped
     networks:
       - slf-net

@@ -14,6 +14,8 @@ func Start(host, port string) error {
 	if err != nil {
 		return fmt.Errorf("API client init failed: %w", err)
 	}
+	fmt.Println("\nAPI client initialized")
+	fmt.Println("\nCreating session...")
 
 	conn, err := client.CreateConnection()
 	if err != nil {
@@ -23,7 +25,6 @@ func Start(host, port string) error {
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, syscall.SIGTERM)
 
-	internalAddr := fmt.Sprintf("%s:%d", conn.Address, conn.InternalPort)
 	localTarget := fmt.Sprintf("%s:%s", host, port)
 
 	go func() {
@@ -33,12 +34,11 @@ func Start(host, port string) error {
 		os.Exit(0)
 	}()
 
-	for i := 0; i < 15; i++ {
-		err = connector.ConnectAndRun(internalAddr, localTarget)
-		if err != nil {
-
-		}
-		break
+	err = connector.ConnectAndRun(localTarget, client, conn)
+	if err != nil {
+		fmt.Println("Connector run failed:", err)
+		_ = client.DeleteConnection(conn.ID)
+		return fmt.Errorf("connector run failed: %w", err)
 	}
 
 	_ = client.DeleteConnection(conn.ID)

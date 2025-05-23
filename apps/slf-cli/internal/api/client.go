@@ -43,7 +43,7 @@ func (c *Client) DoRequest(method, path string, body any) (*http.Response, error
 	if err != nil {
 		return nil, err
 	}
-	req.Header.Set("Authorization", "Bearer "+c.token)
+	req.Header.Set("x-api-key", c.token)
 	req.Header.Set("Content-Type", "application/json")
 
 	client := http.DefaultClient

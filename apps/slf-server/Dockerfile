@@ -18,6 +18,4 @@ WORKDIR /app
 
 COPY --from=builder /app/slf-server .
 
-EXPOSE 8080
-
 ENTRYPOINT ["./slf-server"]

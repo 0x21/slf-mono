@@ -1,6 +1,7 @@
 package connector
 
 import (
+	"cli/internal/api"
 	"encoding/binary"
 	"fmt"
 	"io"
@@ -29,14 +30,26 @@ type stream struct {
 	ready chan struct{}
 }
 
-func ConnectAndRun(serverAddr, localTarget string) error {
-	serverConn, err := net.Dial("tcp", serverAddr)
-	if err != nil {
-		return fmt.Errorf("failed to connect to server: %w", err)
-	}
-	defer serverConn.Close()
+func ConnectAndRun(localTarget string, client *api.Client, conn *api.Connection) error {
 
-	log.Printf("connected to server at %s", serverAddr)
+	serverAddr := fmt.Sprintf("%s:%d", conn.Address, conn.InternalPort)
+	externalAddr := fmt.Sprintf("%s:%d", conn.Address, conn.ExternalPort)
+
+	var serverConn net.Conn
+	var err error
+
+	for {
+		serverConn, err = net.Dial("tcp", serverAddr)
+		if err == nil {
+			break
+		}
+
+		time.Sleep(1 * time.Second)
+	}
+
+	defer serverConn.Close()
+	log.Printf("Connection initialized, you can access your app on: %s", externalAddr)
+	client.UpdateConnection(conn.ID, "connected")
 
 	streams := make(map[uint32]*stream)
 	var mu sync.RWMutex
