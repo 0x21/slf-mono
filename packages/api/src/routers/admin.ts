@@ -1749,11 +1749,11 @@ export const adminRouter = {
 
       const appConfig = await getAppConfig();
       if (appConfig.isEmailEnabled) {
-        await caller.authMail.sendResetPassword({
-          email: user.email ?? "",
-          firstName: user.firstName,
-          otp: otp,
-        });
+        // await caller.authMail.sendResetPassword({
+        //   email: user.email ?? "",
+        //   firstName: user.firstName,
+        //   otp: otp,
+        // });
       }
 
       await createEvent({
@@ -1846,11 +1846,11 @@ export const adminRouter = {
 
       const appConfig = await getAppConfig();
       if (appConfig.isEmailEnabled) {
-        await caller.authMail.sendVerify({
-          email: account.user.email!,
-          firstName: account.user.firstName,
-          otp: otp,
-        });
+        // await caller.authMail.sendVerify({
+        //   email: account.user.email!,
+        //   firstName: account.user.firstName,
+        //   otp: otp,
+        // });
       }
 
       await createEvent({

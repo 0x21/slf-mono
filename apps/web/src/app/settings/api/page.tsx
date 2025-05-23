@@ -72,7 +72,9 @@ export default function Page() {
               one.
             </p>
           ) : (
-            data?.map((apiTokens) => <ApiKeyCard {...apiTokens} />)
+            data?.map((apiToken) => (
+              <ApiKeyCard key={apiToken.id} {...apiToken} />
+            ))
           )}
         </div>
       </CardContent>

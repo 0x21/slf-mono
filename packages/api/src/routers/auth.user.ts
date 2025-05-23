@@ -681,11 +681,11 @@ export const authUserRouter = {
 
     const appConfig = await getAppConfig();
     if (appConfig.isEmailEnabled) {
-      await caller.authMail.sendVerify({
-        email: user.email!,
-        firstName: user.firstName ?? null,
-        otp: otp,
-      });
+      // await caller.authMail.sendVerify({
+      //   email: user.email!,
+      //   firstName: user.firstName ?? null,
+      //   otp: otp,
+      // });
     }
 
     await createEvent({

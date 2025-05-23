@@ -83,11 +83,11 @@ export const publicRouter = {
 
       const appConfig = await getAppConfig();
       if (appConfig.isEmailEnabled) {
-        await caller.authMail.sendResetPassword({
-          email: user.email ?? "",
-          firstName: user.firstName,
-          otp: otp,
-        });
+        // await caller.authMail.sendResetPassword({
+        //   email: user.email ?? "",
+        //   firstName: user.firstName,
+        //   otp: otp,
+        // });
       }
 
       await createEvent({

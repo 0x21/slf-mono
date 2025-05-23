@@ -85,17 +85,17 @@ export function AuthSidebar({ defaultViewport, children }: IProps) {
     const navs: NavItem[] = [
       {
         title: "How it Works",
-        url: "/dashboard/how",
+        url: "dashboard/how",
         icon: CircleHelp,
       },
       {
         title: "CLI",
-        url: "/dashboard/cli",
+        url: "dashboard/cli",
         icon: Terminal,
       },
       {
         title: "Server",
-        url: "/dashboard/server",
+        url: "dashboard/server",
         icon: Server,
       },
     ];

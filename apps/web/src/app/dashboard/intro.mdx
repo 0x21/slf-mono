@@ -1,6 +1,6 @@
 # SelfGrok
 
-SelfGrok is a self-hosted tunneling and TCP multiplexing system similar to Ngrok, built using Golang and TypeScript.
+SelfGrok is a self-hosted TCP tunneling system similar to Ngrok, built using Golang and TypeScript.
 
 It is composed of the following components, organized as a TurboRepo monorepo:
 
@@ -8,17 +8,17 @@ It is composed of the following components, organized as a TurboRepo monorepo:
 
 ```
 apps/
-├── backend     # REST API for managing sessions and authentication
-├── web         # UI built with Next.js App Router + tRPC
-├── slf-server  # Core TCP multiplexer server with framing protocol
-├── slf-cli     # CLI tool for interacting with the server via API
+├── backend # REST API for managing sessions and authentication
+├── web # UI built with Next.js App Router + tRPC
+├── slf-server # Core TCP tunnelling server
+├── slf-cli # CLI tool for interacting with the server via API
 ```
 
 ## 🛠️ Features
 
 - Dynamic session management over HTTP
 - Secure TCP framing & multiplexing
-- Lightweight self-hosted alternative to tunneling services like NGROK
+- Lightweight self-hosted alternative to tunneling services
 - Session authentication via API key
 - Server-client reconnect handling
 - REST API for managing sessions

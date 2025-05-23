@@ -12,8 +12,6 @@ import {
 
 // import { sendMemberJoined } from "@fulltemplate/mail/src/send";
 
-import { env } from "../env";
-import { caller } from "../server";
 import {
   protectedOrganizationOwnerProcedure,
   protectedOrganizationProcedure,
@@ -511,10 +509,10 @@ export const authOrganizationRouter = {
           });
 
           for (const channel of invite.organization.slackChannels) {
-            await caller.authSlack.sendMessageToChannel({
-              webhookUrl: channel.incomingWebhookUrl,
-              message: `${user.firstName} ${user.lastName} joined the <${env.AUTH_URL}/dashboard/${invite.organization.slug}|organization> :tada:`,
-            });
+            // await caller.authSlack.sendMessageToChannel({
+            //   webhookUrl: channel.incomingWebhookUrl,
+            //   message: `${user.firstName} ${user.lastName} joined the <${env.AUTH_URL}/dashboard/${invite.organization.slug}|organization> :tada:`,
+            // });
           }
 
           let members = await ctx.db.organizationMember.findMany({
@@ -734,10 +732,10 @@ export const authOrganizationRouter = {
         });
 
         for (const channel of organization.slackChannels) {
-          await caller.authSlack.sendMessageToChannel({
-            webhookUrl: channel.incomingWebhookUrl,
-            message: `Organization name has been changed to ${input.name}.`,
-          });
+          // await caller.authSlack.sendMessageToChannel({
+          //   webhookUrl: channel.incomingWebhookUrl,
+          //   message: `Organization name has been changed to ${input.name}.`,
+          // });
         }
       }
 
@@ -1095,13 +1093,13 @@ export const authOrganizationRouter = {
 
       const appConfig = await getAppConfig();
       if (appConfig.isEmailEnabled) {
-        await caller.authMail.sendInvite({
-          to: input.email,
-          inviterTeamToken: organizationInvite.id,
-          inviterFirstName: ctx.session.user.firstName ?? "User",
-          inviterEmail: ctx.session.user.email ?? "email",
-          inviterTeamName: organization.name,
-        });
+        // await caller.authMail.sendInvite({
+        //   to: input.email,
+        //   inviterTeamToken: organizationInvite.id,
+        //   inviterFirstName: ctx.session.user.firstName ?? "User",
+        //   inviterEmail: ctx.session.user.email ?? "email",
+        //   inviterTeamName: organization.name,
+        // });
       }
 
       await createOrganizationEvent({

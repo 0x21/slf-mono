@@ -2,12 +2,11 @@ import { fileURLToPath } from "url";
 import { NextConfig } from "next";
 import { PHASE_DEVELOPMENT_SERVER } from "next/constants";
 import bundleAnalyzer from "@next/bundle-analyzer";
-// import nextMDX from "@next/mdx";
+import nextMDX from "@next/mdx";
 import createJiti from "jiti";
-
 // import createNextIntlPlugin from "next-intl/plugin";
 
-// import remarkGfm from "remark-gfm";
+import remarkGfm from "remark-gfm";
 
 createJiti(fileURLToPath(import.meta.url))("./src/env");
 
@@ -18,12 +17,12 @@ const withBundleAnalyzer = bundleAnalyzer({
   openAnalyzer: true,
 });
 
-// const withMDX = nextMDX({
-//   extension: /\.mdx?$/,
-//   options: {
-//     // remarkPlugins: [remarkGfm],
-//   },
-// });
+const withMDX = nextMDX({
+  extension: /\.mdx?$/,
+  options: {
+    remarkPlugins: [remarkGfm],
+  },
+});
 
 const config: NextConfig = {
   reactStrictMode: true,
@@ -121,10 +120,7 @@ const config: NextConfig = {
   // },
 };
 
-// @ts-ignore
-// const baseConfig = withNextIntl(withMDX(config));
-// const baseConfig = withNextIntl(config);
-const baseConfig = config;
+const baseConfig = withMDX(config);
 
 // https://nextjs.org/docs/pages/api-reference/config/next-config-js#phase
 const nextConfig: NextConfig = (phase: string) => {

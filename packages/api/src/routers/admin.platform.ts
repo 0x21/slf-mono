@@ -3,7 +3,6 @@ import { z } from "zod";
 
 import { createOrganizationEvent, getAppConfig } from "@fulltemplate/helpers";
 
-import { caller } from "../server";
 import { protectedAdminProcedure } from "../trpc";
 
 export const adminPlatformRouter = {
@@ -988,11 +987,11 @@ export const adminPlatformRouter = {
         const appConfig = await getAppConfig();
         if (appConfig.isEmailEnabled) {
           for (const member of ticket.organization.members) {
-            await caller.authMail.sendSupportTicketResolved({
-              to: member.user.email ?? "",
-              organizationName: ticket.organization.name,
-              organizationSlug: ticket.organization.slug,
-            });
+            // await caller.authMail.sendSupportTicketResolved({
+            //   to: member.user.email ?? "",
+            //   organizationName: ticket.organization.name,
+            //   organizationSlug: ticket.organization.slug,
+            // });
           }
         }
       }
