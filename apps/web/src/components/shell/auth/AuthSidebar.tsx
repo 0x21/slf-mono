@@ -5,14 +5,7 @@ import { useCallback, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  Archive,
-  BuildingIcon,
-  Calendar,
-  Home,
-  Send,
-  Users,
-} from "lucide-react";
+import { CircleHelp, Home, Key, Router, Server, Terminal } from "lucide-react";
 
 import { BRAND_IMAGEURL, BRAND_TITLE, cn } from "@fulltemplate/common";
 
@@ -59,7 +52,7 @@ export function AuthSidebar({ defaultViewport, children }: IProps) {
   const isMobile = useIsMobile();
 
   const relativePath = useMemo(() => {
-    return `/dashboard`;
+    return `/`;
   }, []);
 
   const currentPath = useMemo(() => {
@@ -69,19 +62,19 @@ export function AuthSidebar({ defaultViewport, children }: IProps) {
   const navMain = useMemo(() => {
     const navs: NavItem[] = [
       {
-        title: "Dashboard",
-        url: "",
+        title: "Introduction",
+        url: "dashboard",
         icon: Home,
       },
       {
-        title: "Users",
-        url: "/users",
-        icon: Users,
+        title: "Connections",
+        url: "dashboard/connections",
+        icon: Router,
       },
       {
-        title: "Events",
-        url: "/events",
-        icon: Calendar,
+        title: "Api Keys",
+        url: "settings/api",
+        icon: Key,
       },
     ];
 
@@ -91,19 +84,19 @@ export function AuthSidebar({ defaultViewport, children }: IProps) {
   const navPlatform = useMemo(() => {
     const navs: NavItem[] = [
       {
-        title: "Organizations",
-        url: "/platform/organizations",
-        icon: BuildingIcon,
+        title: "How it Works",
+        url: "/dashboard/how",
+        icon: CircleHelp,
       },
       {
-        title: "Contacts",
-        url: "/platform/contacts",
-        icon: Archive,
+        title: "CLI",
+        url: "/dashboard/cli",
+        icon: Terminal,
       },
       {
-        title: "Feedbacks",
-        url: "/platform/feedbacks",
-        icon: Send,
+        title: "Server",
+        url: "/dashboard/server",
+        icon: Server,
       },
     ];
     return navs;
@@ -151,7 +144,7 @@ export function AuthSidebar({ defaultViewport, children }: IProps) {
 
         <SidebarContent>
           <SidebarGroup>
-            <SidebarGroupLabel>Test</SidebarGroupLabel>
+            <SidebarGroupLabel>App</SidebarGroupLabel>
 
             <SidebarMenu>
               {navMain.map((item) => {
@@ -177,7 +170,7 @@ export function AuthSidebar({ defaultViewport, children }: IProps) {
           </SidebarGroup>
           <SidebarSeparator />
           <SidebarGroup>
-            <SidebarGroupLabel>Platform</SidebarGroupLabel>
+            <SidebarGroupLabel>Docs</SidebarGroupLabel>
             <SidebarMenu>
               {navPlatform.map((item) => {
                 return (

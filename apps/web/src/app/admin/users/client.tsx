@@ -728,7 +728,7 @@ export default function Client({
 
     const cellValue = row.getValue<string>(columnId);
 
-    return filterValue.some((value) => cellValue.includes(value));
+    return filterValue.some((value) => cellValue.includes(value as string));
   };
 
   const table = useReactTable({
@@ -1018,7 +1018,6 @@ export default function Client({
         />
         <Sheet>
           <SheetTrigger asChild>
-            {/* @ts-ignore */}
             <GenericMultiSelectButton
               label="Providers"
               icon={KeyRound}
@@ -1030,7 +1029,6 @@ export default function Client({
             side="bottom"
             className="flex flex-col rounded-t-lg sm:hidden"
           >
-            {/* @ts-ignore */}
             <GenericMultiSelect
               label="Provider"
               options={PROVIDERS.map((provider) => ({
@@ -1046,7 +1044,6 @@ export default function Client({
         </Sheet>
         <Popover>
           <PopoverTrigger asChild>
-            {/* @ts-ignore */}
             <GenericMultiSelectButton
               label="Providers"
               icon={KeyRound}
@@ -1079,7 +1076,6 @@ export default function Client({
           }}
         >
           <SheetTrigger asChild>
-            {/* @ts-ignore */}
             <GenericFilterButton
               appliedFilters={appliedFilters}
               className="sm:hidden"
@@ -1126,7 +1122,6 @@ export default function Client({
           }}
         >
           <PopoverTrigger asChild>
-            {/* @ts-ignore */}
             <GenericFilterButton
               appliedFilters={appliedFilters}
               className="hidden sm:flex"
@@ -1163,7 +1158,6 @@ export default function Client({
         {/* Display */}
         <Sheet>
           <SheetTrigger asChild>
-            {/* @ts-ignore */}
             <GenericDisplayButton table={table} className="sm:hidden" />
           </SheetTrigger>
           <SheetContent
@@ -1175,7 +1169,6 @@ export default function Client({
         </Sheet>
         <Popover>
           <PopoverTrigger asChild>
-            {/* @ts-ignore */}
             <GenericDisplayButton table={table} className="hidden sm:flex" />
           </PopoverTrigger>
           <PopoverContent className="hidden w-80 sm:flex" align="end">

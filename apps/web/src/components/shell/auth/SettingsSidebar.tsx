@@ -21,6 +21,10 @@ const navigation = [
     name: "Security",
     href: "/settings/security",
   },
+  {
+    name: "API",
+    href: "/settings/api",
+  },
 ];
 
 export default function SettingsSidebar({ children }: WithChildren) {

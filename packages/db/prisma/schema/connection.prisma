@@ -1,0 +1,28 @@
+model Connection {
+    id String @id @default(uuid())
+
+    externalPort String
+    internalPort String
+    address      String
+    lastSeenAt   DateTime @default(now())
+    status       String   @default("connecting")
+    createdAt    DateTime @default(now())
+    updatedAt    DateTime @updatedAt
+    apiKey       ApiKey   @relation(fields: [apiKeyId], references: [id])
+    apiKeyId     String
+
+    @@index([apiKeyId])
+}
+
+model ApiKey {
+    id          String       @id @default(uuid())
+    userId      String
+    token       String       @unique @default(uuid())
+    expiresAt   DateTime
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+    connections Connection[]
+    user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    @@index([userId])
+}
