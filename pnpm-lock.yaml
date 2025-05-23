@@ -181,6 +181,9 @@ importers:
       '@fulltemplate/helpers':
         specifier: workspace:^
         version: link:../../packages/helpers
+      '@fulltemplate/kafka':
+        specifier: workspace:^
+        version: link:../../packages/kafka
       '@fulltemplate/logger':
         specifier: workspace:^
         version: link:../../packages/logger
@@ -333,6 +336,9 @@ importers:
       '@fulltemplate/helpers':
         specifier: workspace:^
         version: link:../../packages/helpers
+      '@fulltemplate/kafka':
+        specifier: workspace:^
+        version: link:../../packages/kafka
       '@fulltemplate/socket':
         specifier: workspace:^
         version: link:../../packages/socket
@@ -964,6 +970,37 @@ importers:
       '@t3-oss/env-core':
         specifier: 'catalog:'
         version: 0.12.0(typescript@5.8.3)(zod@3.25.7)
+    devDependencies:
+      '@fulltemplate/eslint-config':
+        specifier: workspace:^
+        version: link:../../tooling/eslint
+      '@fulltemplate/prettier-config':
+        specifier: workspace:^
+        version: link:../../tooling/prettier
+      '@fulltemplate/tsconfig':
+        specifier: workspace:^
+        version: link:../../tooling/typescript
+      eslint:
+        specifier: 'catalog:'
+        version: 9.25.1(jiti@2.4.2)
+      prettier:
+        specifier: 'catalog:'
+        version: 3.5.3
+      typescript:
+        specifier: 'catalog:'
+        version: 5.8.3
+
+  packages/kafka:
+    dependencies:
+      '@t3-oss/env-core':
+        specifier: 'catalog:'
+        version: 0.12.0(typescript@5.8.3)(zod@3.24.2)
+      kafkajs:
+        specifier: 2.2.4
+        version: 2.2.4
+      zod:
+        specifier: 'catalog:'
+        version: 3.24.2
     devDependencies:
       '@fulltemplate/eslint-config':
         specifier: workspace:^
@@ -5488,6 +5525,10 @@ packages:
 
   jws@3.2.2:
     resolution: {integrity: sha512-YHlZCB6lMTllWDtSPHz/ZXTsi8S00usEV6v1tjq8tOUZzw7DpSDWVXjXDre6ed1w/pd495ODpHZYSdkRTsa0HA==}
+
+  kafkajs@2.2.4:
+    resolution: {integrity: sha512-j/YeapB1vfPT2iOIUn/vxdyKEuhuY2PxMBvf5JWux6iSaukAccrMtXEY/Lb7OvavDhOWME589bpLrEdnVHjfjA==}
+    engines: {node: '>=14.0.0'}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -12355,6 +12396,8 @@ snapshots:
     dependencies:
       jwa: 1.4.2
       safe-buffer: 5.2.1
+
+  kafkajs@2.2.4: {}
 
   keyv@4.5.4:
     dependencies:

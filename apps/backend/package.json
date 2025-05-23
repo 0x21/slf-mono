@@ -22,6 +22,7 @@
     "@fulltemplate/db": "workspace:^",
     "@fulltemplate/event": "workspace:^",
     "@fulltemplate/helpers": "workspace:^",
+    "@fulltemplate/kafka": "workspace:^",
     "@fulltemplate/logger": "workspace:^",
     "@fulltemplate/socket": "workspace:^",
     "@paralleldrive/cuid2": "catalog:",

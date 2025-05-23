@@ -1,52 +1,53 @@
 {
-	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"source.fixAll": "explicit",
-		"source.organizeImports": "explicit"
-	},
-	"editor.rulers": [
-		80
-	],
-	"[typescriptreact]": {
-		// "editor.wordWrap": "wordWrapColumn",
-		"editor.wordWrapColumn": 80
-	},
-	"editor.stickyScroll.enabled": false,
-	"workbench.tree.enableStickyScroll": false,
-	"explorer.compactFolders": false,
-	"files.associations": {
-		"*.css": "tailwindcss"
-	},
-	"files.exclude": {
-		"**/.git": true,
-		"**/.svn": true,
-		"**/.hg": true,
-		"**/CVS": true,
-		"**/.DS_Store": true,
-		"**/Thumbs.db": true,
-		"**/.next": true,
-		"**/.turbo": true,
-		"**/build": true,
-		"**/dist": true,
-		"**/tsconfig.tsbuildinfo": true,
-		"**/node_modules": true,
-		"**/.pnpm-store": true,
-		"**/.vercel": true,
-		"**/.nitro": true,
-		"**/.output": true,
-		"**/.cache": true
-	},
-	"files.watcherExclude": {
-		"**/_generated/**": true,
-	},
-	"search.exclude": {
-		"**/_generated/**": true,
-	},
-	"files.readonlyInclude": {
-		"**/_generated/**": true,
-	},
-	"[prisma]": {
-		"editor.defaultFormatter": "Prisma.prisma"
-	}
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit"
+  },
+  "editor.rulers": [80],
+  "[typescriptreact]": {
+    // "editor.wordWrap": "wordWrapColumn",
+    "editor.wordWrapColumn": 80
+  },
+  "editor.stickyScroll.enabled": false,
+  "workbench.tree.enableStickyScroll": false,
+  "explorer.compactFolders": false,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/.next": true,
+    "**/.turbo": true,
+    "**/build": true,
+    "**/dist": true,
+    "**/tsconfig.tsbuildinfo": true,
+    "**/node_modules": true,
+    "**/.pnpm-store": true,
+    "**/.vercel": true,
+    "**/.nitro": true,
+    "**/.output": true,
+    "**/.cache": true
+  },
+  "files.watcherExclude": {
+    "**/_generated/**": true
+  },
+  "search.exclude": {
+    "**/_generated/**": true
+  },
+  "files.readonlyInclude": {
+    "**/_generated/**": true
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[go]": {
+    "editor.defaultFormatter": "golang.go"
+  }
 }

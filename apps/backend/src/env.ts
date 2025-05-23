@@ -4,10 +4,10 @@ import { z } from "zod";
 
 import { env as dbEnv } from "@fulltemplate/db/src/env";
 import { env as eventEnv } from "@fulltemplate/event/src/env";
-
 // import { env as apiInternalEnv } from "@fulltemplate/api-internal/src/env";
 // import { env as redisEnv } from "@fulltemplate/redis/src/env";
-// import { env as kafkaEnv } from "@fulltemplate/kafka/src/env";
+import { env as kafkaEnv } from "@fulltemplate/kafka/src/env";
+
 // import { env as mailEnv } from "@fulltemplate/mail/src/env";
 
 export const env = createEnv({
@@ -16,7 +16,7 @@ export const env = createEnv({
     // apiInternalEnv,
     // mailEnv,
     eventEnv,
-    // kafkaEnv,
+    kafkaEnv,
     // redisEnv,
   ],
   server: {
@@ -24,6 +24,7 @@ export const env = createEnv({
       .enum(["development", "test", "production"])
       .default("development"),
     PORT: z.string(),
+    SERVER_URL: z.string(),
     AUTH_URL: z.string().url(),
     API_SECRET: z.string(),
     API_SECRET_BACKEND: z.string(),

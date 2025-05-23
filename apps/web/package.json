@@ -26,6 +26,7 @@
     "@fulltemplate/db": "workspace:^",
     "@fulltemplate/event": "workspace:^",
     "@fulltemplate/helpers": "workspace:^",
+    "@fulltemplate/kafka": "workspace:^",
     "@fulltemplate/socket": "workspace:^",
     "@hookform/resolvers": "3.10.0",
     "@mdx-js/loader": "3.1.0",

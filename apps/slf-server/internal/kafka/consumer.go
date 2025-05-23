@@ -17,6 +17,7 @@ type KafkaConsumer struct {
 type SessionMessage struct {
 	Type         string `json:"type"` // start | stop
 	SessionID    string `json:"sessionId"`
+	Address      string `json:"address"`
 	ExternalPort int    `json:"externalPort,omitempty"`
 	InternalPort int    `json:"internalPort,omitempty"`
 }

@@ -4,10 +4,12 @@ import cors from "cors";
 import express from "express";
 import helmet from "helmet";
 
+import { kafkaProducer } from "@fulltemplate/kafka";
 import logger from "@fulltemplate/logger";
 
 import { env } from "~/env";
 import { io, setupSocketIO } from "~/lib/socket";
+import { initPorts } from "./lib/init";
 import router from "./server/routes";
 
 const app = express();
@@ -31,7 +33,22 @@ app.use(cookieParser());
 
 app.use(router);
 
-server.listen(env.PORT, () => {
-  logger.info(`Server is running on port: ${env.PORT}`);
-  void setupSocketIO();
-});
+void (async () => {
+  try {
+    await kafkaProducer.connect();
+    logger.info(`Kafka producer connected to ${env.KAFKA_URL}`);
+  } catch (err) {
+    logger.error("Kafka producer connection Error", err);
+  }
+
+  try {
+    await initPorts();
+  } catch (err) {
+    logger.error("Port init failed", err);
+  }
+
+  server.listen(env.PORT, () => {
+    logger.info(`Server is running on port: ${env.PORT}`);
+    void setupSocketIO();
+  });
+})();

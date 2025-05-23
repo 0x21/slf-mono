@@ -15,7 +15,7 @@ export const authenticateApiKey = async (
 
   try {
     const apiKeyRecord = await db.apiKey.findUnique({
-      where: { key: apiKey },
+      where: { token: apiKey },
       include: {
         user: true,
       },
@@ -23,6 +23,10 @@ export const authenticateApiKey = async (
 
     if (!apiKeyRecord) {
       return res.status(401).json({ error: "Invalid API key" });
+    }
+
+    if (apiKeyRecord.expiresAt < new Date()) {
+      return res.status(401).json({ error: "API key expired" });
     }
 
     res.locals.apiKey = apiKeyRecord;

@@ -25,7 +25,7 @@ export const authConnectionRouter = {
         lastSeenAt: true,
         createdAt: true,
       },
-      take: 10,
+      take: 500,
     });
 
     return connections;

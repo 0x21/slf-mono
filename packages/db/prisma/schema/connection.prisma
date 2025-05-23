@@ -1,8 +1,8 @@
 model Connection {
     id String @id @default(uuid())
 
-    externalPort String
-    internalPort String
+    externalPort Int
+    internalPort Int
     address      String
     lastSeenAt   DateTime @default(now())
     status       String   @default("connecting")
@@ -12,6 +12,13 @@ model Connection {
     apiKeyId     String
 
     @@index([apiKeyId])
+}
+
+model PortPool {
+    port       Int       @id @unique
+    reservedAt DateTime  @default(now())
+    releasedAt DateTime?
+    reserved   Boolean   @default(false)
 }
 
 model ApiKey {
