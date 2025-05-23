@@ -1,6 +1,5 @@
 // don't import mailEnv as short, it breaks tsconfig jsx
 import { createEnv } from "@t3-oss/env-core";
-import { railway } from "@t3-oss/env-core/presets-zod";
 import { z } from "zod";
 
 import { env as dbEnv } from "@fulltemplate/db/src/env";
@@ -19,7 +18,6 @@ export const env = createEnv({
     eventEnv,
     // kafkaEnv,
     // redisEnv,
-    railway(),
   ],
   server: {
     NODE_ENV: z

@@ -8,6 +8,7 @@ import logger from "@fulltemplate/logger";
 
 import { env } from "~/env";
 import { io, setupSocketIO } from "~/lib/socket";
+import router from "./server/routes";
 
 const app = express();
 const server = http.createServer(app);
@@ -27,6 +28,8 @@ app.use(
   }),
 );
 app.use(cookieParser());
+
+app.use(router);
 
 server.listen(env.PORT, () => {
   logger.info(`Server is running on port: ${env.PORT}`);
