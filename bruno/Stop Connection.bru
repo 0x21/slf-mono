@@ -1,0 +1,11 @@
+meta {
+  name: Stop Connection
+  type: http
+  seq: 2
+}
+
+delete {
+  url: http://localhost:3000/api/connection/test
+  body: none
+  auth: inherit
+}
