@@ -103,5 +103,3 @@ All REST requests are defined in [Bruno](https://www.usebruno.com) workspace in 
 - [README_SLF_SERVER.md](./server)
 
 ---
-
-Built with ❤️ by developers for developers.
