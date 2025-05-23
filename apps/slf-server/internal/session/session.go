@@ -13,7 +13,7 @@ type Session struct {
 	ExternalPort int
 	InternalPort int
 	ExtListener  net.Listener
-	IntListener  net.Listener // opsiyonel, şu an kullanılmıyor
+	IntListener  net.Listener //optional, I'll use it later maybe.
 	Active       bool
 	muxServer    *mux.Server
 	mu           sync.Mutex

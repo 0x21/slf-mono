@@ -16,14 +16,12 @@ func NewManager(r *Registry) *Manager {
 }
 
 func (m *Manager) StartSession(id string, extPort, intPort int) {
-	// Session zaten varsa reconnect moduna geç
 	if existing, exists := m.registry.Get(id); exists {
 		log.Printf("[session] session %s already exists, waiting for internal reconnect", id)
 		go existing.WaitForInternalReconnect()
 		return
 	}
 
-	// Internal bağlantı bekleniyor
 	internalLn, err := net.Listen("tcp", fmt.Sprintf(":%d", intPort))
 	if err != nil {
 		log.Printf("[session] failed to listen on internal port %d: %v", intPort, err)
@@ -40,11 +38,9 @@ func (m *Manager) StartSession(id string, extPort, intPort int) {
 	internalLn.Close()
 	log.Printf("[session] internal client connected")
 
-	// Mux başlat
 	muxServer := mux.NewServer(internalConn)
 	muxServer.Start()
 
-	// External listener
 	externalLn, err := net.Listen("tcp", fmt.Sprintf(":%d", extPort))
 	if err != nil {
 		log.Printf("[session] failed to listen on external port %d: %v", extPort, err)
@@ -52,7 +48,6 @@ func (m *Manager) StartSession(id string, extPort, intPort int) {
 		return
 	}
 
-	// External bağlantıları mux'a aktarma
 	go func() {
 		for {
 			conn, err := externalLn.Accept()
@@ -65,7 +60,6 @@ func (m *Manager) StartSession(id string, extPort, intPort int) {
 		}
 	}()
 
-	// Session oluştur ve kaydet
 	s := &Session{
 		ID:           id,
 		ExternalPort: extPort,
