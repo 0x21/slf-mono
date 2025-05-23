@@ -1,29 +1,24 @@
-"use client";
-
-import { MDXRemote } from "next-mdx-remote/rsc";
-
-const markdown = `
 # SelfGrok
 
-SelfGrok is a self-hosted TCP tunneling system similar to Ngrok, built using Golang and TypeScript.
+SelfGrok is a self-hosted tunneling and TCP multiplexing system similar to Ngrok, built using Golang and TypeScript.
 
 It is composed of the following components, organized as a TurboRepo monorepo:
 
 ## 📦 Project Structure
 
-\`\`\`
+```
 apps/
 ├── backend     # REST API for managing sessions and authentication
 ├── web         # UI built with Next.js App Router + tRPC
-├── slf-server  # Core TCP tunnelling server
+├── slf-server  # Core TCP multiplexer server with framing protocol
 ├── slf-cli     # CLI tool for interacting with the server via API
-\`\`\`
+```
 
 ## 🛠️ Features
 
 - Dynamic session management over HTTP
 - Secure TCP framing & multiplexing
-- Lightweight self-hosted alternative to tunneling services
+- Lightweight self-hosted alternative to tunneling services like NGROK
 - Session authentication via API key
 - Server-client reconnect handling
 - REST API for managing sessions
@@ -33,14 +28,15 @@ apps/
 
 ## 🔌 API Overview
 
-All endpoints require a valid \`x-api-key\` header.
+All endpoints require a valid `x-api-key` header.
 
 ### Create Connection
 
-**POST** \`/api/connection\`
+**POST** `/api/connection`
 
 Response:
-\`\`\`json
+
+```json
 {
   "success": true,
   "message": "Connection created successfully",
@@ -52,87 +48,84 @@ Response:
     "status": "connecting"
   }
 }
-\`\`\`
+```
 
 Possible error responses:
-- \`401 Unauthorized\`: \`{ "success": false, "message": "Unauthorized", "error": "unauthorized" }\`
-- \`503 Service Unavailable\`: \`{ "success": false, "message": "...", "error": "no_ports_available" }\`
-- \`400 Bad Request\`: \`{ "success": false, "message": "...", "error": "validation_error" }\`
+
+- `401 Unauthorized`: `{ "success": false, "message": "Unauthorized", "error": "unauthorized" }`
+- `503 Service Unavailable`: `{ "success": false, "message": "...", "error": "no_ports_available" }`
+- `400 Bad Request`: `{ "success": false, "message": "...", "error": "validation_error" }`
 
 ---
 
 ### Stop Connection
 
-**DELETE** \`/api/connection/:id\`
+**DELETE** `/api/connection/:id`
 
 Success:
-\`\`\`json
+
+```json
 {
   "success": true,
   "message": "Connection stopped successfully",
   "data": true
 }
-\`\`\`
+```
 
 Possible error responses:
-- \`401 Unauthorized\`
-- \`400 Bad Request\`: \`{ "error": "missing_id" }\`
-- \`404 Not Found\`: \`{ "error": "not_found" }\`
+
+- `401 Unauthorized`
+- `400 Bad Request`: `{ "error": "missing_id" }`
+- `404 Not Found`: `{ "error": "not_found" }`
 
 ---
 
 ### Update Connection
 
-**PATCH** \`/api/connection/:id\`
+**PATCH** `/api/connection/:id`
 
 Body:
-\`\`\`json
+
+```json
 {
   "status": "disconnected"
 }
-\`\`\`
+```
 
 Success:
-\`\`\`json
+
+```json
 {
   "success": true,
   "message": "Connection update successfully",
   "data": null
 }
-\`\`\`
+```
 
 Errors:
+
 - Same as above
 
 ## 🔐 Auth
 
 Set your config with:
 
-\`\`\`bash
+```bash
 selfgrok config --setToken <API_KEY> --setServerUrl http://localhost:8080
-\`\`\`
+```
 
 ## 💻 CLI Usage
 
 Start a new session exposing local port:
 
-\`\`\`bash
+```bash
 selfgrok session --host localhost --port 3000
-\`\`\`
+```
 
 ## 🧪 API Testing
 
-API endpoints can be tested using the included [Bruno](https://www.usebruno.com/) collection under \`bruno/\` directory.
+API endpoints can be tested using the included [Bruno](https://www.usebruno.com/) collection under `bruno/` directory.
 
 ## 📄 License
 
 MIT
-`;
-
-export default function Page() {
-  return (
-    <div className="prose dark:prose-invert mx-auto max-w-3xl p-6">
-      <MDXRemote source={markdown} />
-    </div>
-  );
-}
