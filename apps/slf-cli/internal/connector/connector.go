@@ -1,4 +1,4 @@
-package main
+package connector
 
 import (
 	"encoding/binary"
@@ -16,11 +16,6 @@ const (
 	frameTypeClose   = 3
 )
 
-var (
-	serverAddr  = "127.0.0.1:6824"
-	localTarget = "localhost:3000"
-)
-
 type Frame struct {
 	Type     byte
 	StreamID uint32
@@ -34,15 +29,7 @@ type stream struct {
 	ready chan struct{}
 }
 
-func main() {
-	for {
-		err := connectAndRun()
-		log.Printf("connection loop ended: %v", err)
-		time.Sleep(1 * time.Second)
-	}
-}
-
-func connectAndRun() error {
+func ConnectAndRun(serverAddr, localTarget string) error {
 	serverConn, err := net.Dial("tcp", serverAddr)
 	if err != nil {
 		return fmt.Errorf("failed to connect to server: %w", err)
@@ -70,7 +57,7 @@ func connectAndRun() error {
 			switch f.Type {
 			case frameTypeConnect:
 				log.Printf("[connect] new streamID %d", f.StreamID)
-				go handleConnect(f.StreamID, streams, &mu, writeQueue)
+				go handleConnect(f.StreamID, streams, &mu, writeQueue, localTarget)
 
 			case frameTypeData:
 				mu.RLock()
@@ -117,7 +104,7 @@ func connectAndRun() error {
 	select {}
 }
 
-func handleConnect(streamID uint32, streams map[uint32]*stream, mu *sync.RWMutex, writeQueue chan *Frame) {
+func handleConnect(streamID uint32, streams map[uint32]*stream, mu *sync.RWMutex, writeQueue chan *Frame, localTarget string) {
 	str := &stream{ready: make(chan struct{})}
 	mu.Lock()
 	streams[streamID] = str
