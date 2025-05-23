@@ -8,6 +8,6 @@ type Config struct {
 func Load() *Config {
 	return &Config{
 		KafkaBrokers: []string{"localhost:29092"},
-		KafkaTopic:   "session-events",
+		KafkaTopic:   "connection",
 	}
 }
